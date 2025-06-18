@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button  slot="start" fill="clear" (click)="cancel()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Add Workout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form">
+
+    <ion-item>
+      <ion-label position="stacked">Date</ion-label>
+      <ion-datetime
+        display-format="MMM d, yyyy"
+        formControlName="date">
+      </ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Day Type</ion-label>
+      <ion-select formControlName="dayType">
+        <ion-select-option>Push Day</ion-select-option>
+        <ion-select-option>Pull Day</ion-select-option>
+        <ion-select-option>Leg Day</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Exercises</ion-label>
+      </ion-list-header>
+
+      <ng-container formArrayName="exercises">
+        <div *ngFor="let ex of exercises.controls; let i = index" [formGroupName]="i">
+          <ion-item>
+            <ion-input
+              placeholder="Name"
+              formControlName="name">
+            </ion-input>
+            <ion-input
+              placeholder="kg"
+              type="number"
+              formControlName="weightKg"
+              slot="end">
+            </ion-input>
+          </ion-item>
+          <ion-button
+            fill="clear"
+            size="small"
+            (click)="removeExercise(i)">
+            Remove
+          </ion-button>
+        </div>
+      </ng-container>
+
+      <ion-button
+        expand="full"
+        fill="outline"
+        (click)="addExercise()">
+        + Add Exercise
+      </ion-button>
+    </ion-list>
+
+    <ion-button
+      expand="full"
+      [disabled]="form.invalid"
+      (click)="save()">
+      Save Workout
+    </ion-button>
+  </form>
+</ion-content>
