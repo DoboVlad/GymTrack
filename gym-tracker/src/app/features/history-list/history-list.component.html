@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Workout History</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item 
+      *ngFor="let workout of workoutMockup" 
+      (click)="openWorkoutDetail(workout)"
+    >
+      <ion-label>
+        <h2>{{ workout.date | date:'MMM d' }}</h2>
+        <p>{{ workout.dayType }}</p>
+      </ion-label>
+      <ion-note slot="end">{{ totalWeight(workout) }} kg</ion-note>
+    </ion-item>
+  </ion-list>
+
+  <!-- Floating Add button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openAddWorkout()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

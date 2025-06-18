@@ -6,6 +6,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/home/home.page').then((m) => m.HomePage),
   },
   {
+    path: 'history',
+    loadComponent: () => import('./features/history-list/history-list.component').then((m) => m.HistoryListComponent),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',

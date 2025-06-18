@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <<ion-button slot="start" fill="clear" (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{ workout.date | date : "fullDate" }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item lines="none">
+    <ion-label>
+      <h2>Day Type</h2>
+      <p>{{ workout.dayType }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-list>
+    <ion-list-header> Exercises </ion-list-header>
+    <ion-item *ngFor="let ex of workout.exercise">
+      <ion-label>{{ ex.name }}</ion-label>
+      <ion-note slot="end">{{ ex.weightKg }} kg</ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>
