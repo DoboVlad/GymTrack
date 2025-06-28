@@ -1,0 +1,130 @@
+.gt-home {
+  min-height: calc(100vh - 128px); // Adjust depending on header/footer height
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  padding: 2rem;
+  box-sizing: border-box;
+
+  &__content {
+    flex: 1 1 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    background: rgba(235, 235, 235, 0.9); // subtle background for contrast
+    padding: 2rem 2.5rem;
+    border-radius: 2rem;
+    box-shadow: 0 4px 24px rgba(35, 37, 38, 0.06);
+  }
+
+  &__title {
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: #232526; // <-- Changed from #fafafa to a dark color
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); // subtle shadow
+
+    &--accent {
+      color: #6be585;
+    }
+  }
+
+  &__quote {
+    font-size: 1.4rem;
+    color: #000;
+    font-style: italic;
+
+    &--accent {
+      color: #6be585;
+      font-weight: 600;
+      font-style: normal;
+    }
+  }
+
+  &__cta-container {
+    display: flex;
+    justify-content: space-between; // Aligns button to the right
+  }
+
+  &__cta-btn {
+    background: #6be585;
+    color: #232526;
+    border: none;
+    padding: 0.7rem 1.8rem; // Smaller width
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(107, 229, 133, 0.08);
+    transition: background 0.16s;
+    min-width: 140px; // Optional: ensures it's not too small
+
+    &:hover {
+      background: #50cc99;
+      color: #fff;
+    }
+  }
+
+  &__images {
+    flex: 1 1 350px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  &__img {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 2rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.16);
+    border: 3px solid #414345;
+    transition: transform 0.18s;
+
+    &:hover {
+      transform: scale(1.06) rotate(-2deg);
+      border-color: #6be585;
+    }
+
+    &--middle {
+      width: 150px;
+      height: 210px;
+      z-index: 2;
+      margin-bottom: -24px;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 900px) {
+  .gt-home {
+    flex-direction: column;
+    gap: 2rem;
+
+    &__images {
+      flex-direction: row;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .gt-home {
+    padding: 1rem;
+
+    &__content {
+      gap: 1.2rem;
+    }
+    &__images {
+      gap: 0.6rem;
+    }
+    &__img,
+    &__img--middle {
+      width: 70px;
+      height: 100px;
+      border-radius: 1rem;
+    }
+  }
+}

@@ -1,0 +1,59 @@
+$accent-green: #6be585;
+$card-radius: 1.2rem;
+
+
+.main-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2.5rem 2vw;
+  max-width: 90%;
+  margin: 40px auto;
+  background: rgba(235, 235, 235, 0.9); // subtle background for contrast
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 1.2rem 3vw;
+    max-width: 99vw;
+  }
+}
+
+.left-column {
+  flex: 2 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.greeting-section {
+  h1 {
+    font-size: 2.7rem;
+    font-weight: 800;
+    color: $accent-green;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.5px;
+  }
+  .subtitle {
+    font-size: 1.25rem;
+    color: #000;
+    margin: 0;
+  }
+}
+
+.workout-history-section {
+  background: #fff; // subtle background for contrast
+  border-radius: $card-radius;
+  box-shadow: 0 4px 18px rgba(60, 80, 100, 0.07);
+  padding: 1.6rem 1.2rem;
+}
+
+.body-composition-section {
+  flex: 1.1 1 0;
+  background: #fff;
+  border-radius: $card-radius;
+  box-shadow: 0 4px 18px rgba(60, 80, 100, 0.13);
+  padding: 2.1rem 1.3rem;
+  align-self: flex-start;
+}

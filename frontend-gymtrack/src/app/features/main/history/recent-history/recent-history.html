@@ -1,0 +1,10 @@
+<h2>Recent Workouts</h2>
+<div class="workout-cards">
+  @for (workout of lastThreeWorkouts(); track $index) {
+  <div class="workout-card">
+    <div class="workout-date">{{ workout.date }}</div>
+    <div class="workout-name">{{ workout.name }}</div>
+    <!-- <div class="workout-main-stat">{{ workout.mainStat }}</div> -->
+  </div>
+  }
+</div>

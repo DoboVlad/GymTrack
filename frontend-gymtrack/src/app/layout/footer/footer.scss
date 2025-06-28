@@ -1,0 +1,44 @@
+.gt-footer {
+  width: 100vw;
+  background: linear-gradient(90deg, #232526 0%, #414345 100%);
+  color: #fafafa;
+  font-size: 1rem;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+  padding: 1rem 0;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &__copyright {
+    opacity: 0.85;
+    user-select: none;
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  &__link {
+    color: #6be585;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px dashed #6be585;
+    transition: color 0.18s, border 0.18s;
+
+    &:hover {
+      color: #fff;
+      border-bottom: 1px solid #fff;
+    }
+  }
+}

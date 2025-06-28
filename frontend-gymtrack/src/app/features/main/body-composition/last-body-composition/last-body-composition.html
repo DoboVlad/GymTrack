@@ -1,0 +1,36 @@
+<h2>
+  Your Body Stats
+  <span class="body-comp-date">(as of {{ lastBodyCompDate() }})</span>
+</h2>
+<table class="body-comp-table">
+  <tbody>
+    <tr>
+      <td>Kilograms</td>
+      <td class="stat-value">{{ bodyComp().kilograms }}</td>
+    </tr>
+    <tr>
+      <td>Body Fat</td>
+      <td class="stat-value">{{ bodyComp().bodyFat }}%</td>
+    </tr>
+    <tr>
+      <td>Muscle Mass</td>
+      <td class="stat-value">{{ bodyComp().muscleMass }} kg</td>
+    </tr>
+    <tr>
+      <td>Body Water</td>
+      <td class="stat-value">{{ bodyComp().bodyWater }}%</td>
+    </tr>
+    <tr>
+      <td>Bone Mass</td>
+      <td class="stat-value">{{ bodyComp().boneMass }} kg</td>
+    </tr>
+    <tr>
+      <td>Muscle Recovery</td>
+      <td class="stat-value">{{ bodyComp().muscleRecovery }}</td>
+    </tr>
+    <tr>
+      <td>Metabolic Age</td>
+      <td class="stat-value">{{ bodyComp().metabolicAge }}</td>
+    </tr>
+  </tbody>
+</table>

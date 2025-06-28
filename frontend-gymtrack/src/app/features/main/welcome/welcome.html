@@ -1,0 +1,20 @@
+<div class="main-page-container">
+  <!-- LEFT: Greeting + Workout History -->
+  <div class="left-column">
+    <!-- Greeting -->
+    <section class="greeting-section">
+      <h1>Welcome back, Vlad 👋</h1>
+      <p class="subtitle">Ready for a new workout?</p>
+    </section>
+
+    <!-- Workout History -->
+    <section class="workout-history-section">
+      <app-recent-history [lastThreeWorkouts]="lastThreeWorkouts" />
+    </section>
+  </div>
+
+  <!-- RIGHT: Body Composition -->
+  <aside class="body-composition-section">
+    <app-last-body-composition [bodyComp]="bodyComp" [lastBodyCompDate]="lastBodyCompDate" />
+  </aside>
+</div>

@@ -1,0 +1,12 @@
+<nav class="sidebar">
+  <ul class="sidebar__nav">
+    @for (link of links(); track $index) {
+      <li class="sidebar__item">
+        <a [routerLink]="link.route" routerLinkActive="sidebar__link--active" class="sidebar__link">
+          <lucide-icon [img]="link.icon" class="sidebar__icon"></lucide-icon>
+          <span>{{ link.name }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+</nav>

@@ -1,0 +1,80 @@
+// Sidebar container
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%; // full vertical space
+  width: 240px;
+  background: #191c24;
+  color: #fff;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar__nav {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+  // Optionally, add: overflow-y: auto; if you ever have a long menu
+}
+
+.sidebar__item {
+  width: 100%;
+}
+
+// Navigation Link
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  text-decoration: none;
+  color: #c7c8ce;
+  border-radius: 8px 0 0 8px;
+  font-size: 1.1rem;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover,
+  &.sidebar__link--active {
+    background: #282b36;
+    color: #4ef3c6; // Gym-teal accent
+    .sidebar__icon {
+      color: #4ef3c6;
+    }
+  }
+}
+
+// Icon Style
+.sidebar__icon {
+  font-size: 1.5rem;
+  color: #b0b3bc;
+  transition: color 0.2s;
+  min-width: 24px;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar__link span {
+  flex: 1;
+  font-weight: 500;
+}
+
+// Responsive - Hide sidebar on small screens (optional, adjust as needed)
+@media (max-width: 900px) {
+  .sidebar {
+    width: 56px;
+    padding: 24px 0;
+    .sidebar__header {
+      display: none;
+    }
+    .sidebar__link span {
+      display: none;
+    }
+    .sidebar__link {
+      justify-content: center;
+      padding: 12px 0;
+    }
+  }
+}

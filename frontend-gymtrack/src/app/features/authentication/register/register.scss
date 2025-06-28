@@ -1,0 +1,147 @@
+.gt-register {
+  min-height: calc(100vh - 128px); // account for header/footer
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+
+  &__card {
+    background: #fff;
+    border-radius: 2rem;
+    box-shadow: 0 4px 32px rgba(35, 37, 38, 0.08);
+    padding: 2.5rem 2rem 2rem 2rem;
+    min-width: 340px;
+    max-width: 620px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.4rem;
+  }
+
+  &__title {
+    color: #232526;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  &__grid {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+
+    @media (max-width: 800px) {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  &__col {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    label {
+      font-weight: 600;
+      color: #232526;
+      letter-spacing: 0.3px;
+
+      span {
+        color: #6be585;
+        font-weight: 700;
+        margin-left: 2px;
+      }
+    }
+
+    input, select {
+      padding: 0.7rem 1rem;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 0.9rem;
+      font-size: 1rem;
+      transition: border-color 0.15s, box-shadow 0.18s;
+      outline: none;
+      background: #fafafa;
+      color: #232526;
+
+      &:focus {
+        border-color: #6be585;
+        box-shadow: 0 0 0 2px rgba(107, 229, 133, 0.15);
+      }
+    }
+
+    select:invalid {
+      color: #a0a0a0;
+    }
+  }
+
+  &__btn-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.2rem;
+  }
+
+  &__btn {
+    background: #6be585;
+    color: #232526;
+    border: none;
+    padding: 0.8rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.16s;
+    box-shadow: 0 2px 8px rgba(107, 229, 133, 0.09);
+
+    &:hover {
+      background: #50cc99;
+      color: #fff;
+    }
+  }
+
+  &__switch {
+    margin-top: 0.7rem;
+    text-align: center;
+    font-size: 1rem;
+    color: #232526;
+
+    a {
+      color: #6be585;
+      text-decoration: underline;
+      margin-left: 0.3rem;
+      font-weight: 600;
+
+      &:hover {
+        color: #50cc99;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .gt-register__card {
+    min-width: unset;
+    padding: 1.2rem 0.6rem;
+    max-width: 99vw;
+  }
+
+  .gt-register__btn {
+    width: 100%;
+  }
+}
