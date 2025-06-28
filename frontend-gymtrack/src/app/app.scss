@@ -28,13 +28,11 @@ app-navbar {
   flex: 1 1 0%;
   min-width: 0;
   padding: 32px;
-  background: #f5f6fa;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   overflow: auto;
-  // Your content styles here
 }
 
 app-footer {
-  /* your footer styles */
   width: 100%;
   z-index: 2;
 }

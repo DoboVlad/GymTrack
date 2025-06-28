@@ -10,8 +10,8 @@ import { ChartPieIcon, DumbbellIcon, HouseIcon, LucideAngularModule, TrendingUpI
 })
 export class Navbar {
   links = signal([
-    { name: 'Home', icon: HouseIcon, route: '/home' },
-    { name: 'User Profile', icon: UserIcon, route: '/profile' },
+    { name: 'Home', icon: HouseIcon, route: '/welcome' },
+    { name: 'User Profile', icon: UserIcon, route: '/user-profile' },
     { name: 'Workouts', icon: DumbbellIcon, route: '/workouts' },
     {
       name: 'Body Composition',
