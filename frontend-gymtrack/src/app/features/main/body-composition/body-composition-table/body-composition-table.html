@@ -1,0 +1,31 @@
+<table class="bodycomp-table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Weight</th>
+      <th>Body Fat %</th>
+      <th>Muscle Mass</th>
+      <th>Body Water</th>
+      <th>Bone Mass</th>
+      <th>Metabolic Age</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (comp of bodyCompositions(); track $index) {
+    <tr>
+      <td>{{ comp.date }}</td>
+      <td>{{ comp.weight }}</td>
+      <td>{{ comp.bodyFat }}</td>
+      <td>{{ comp.muscleMass }}</td>
+      <td>{{ comp.bodyWater }}</td>
+      <td>{{ comp.boneMass }}</td>
+      <td>{{ comp.metabolicAge }}</td>
+      <td>
+        <button class="edit-btn">Edit</button>
+        <button class="delete-btn">Delete</button>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>

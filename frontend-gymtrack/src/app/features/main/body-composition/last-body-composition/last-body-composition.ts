@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { BodyComposition } from '../../../../models/body-composition';
+import { BodyCompositionModel } from '../../../../models/body-composition';
 
 @Component({
   selector: 'app-last-body-composition',
@@ -9,5 +9,5 @@ import { BodyComposition } from '../../../../models/body-composition';
 })
 export class LastBodyComposition {
   lastBodyCompDate = input.required<string>();
-  bodyComp = input.required<BodyComposition>();
+  bodyComp = input.required<BodyCompositionModel>();
 }

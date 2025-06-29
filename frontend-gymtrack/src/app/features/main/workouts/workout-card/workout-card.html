@@ -1,0 +1,15 @@
+<div class="workout-card">
+  <div class="workout-header">
+    <span class="workout-type">{{ workout().type }}</span>
+    <span class="workout-date">{{ workout().date }}</span>
+  </div>
+  <div class="exercises-list">
+    @for (exercise of workout().exercises; track $index) {
+    <app-exercise-row [exercise]="exercise" />
+    }
+  </div>
+  <div class="workout-actions">
+    <button class="edit-btn">Edit</button>
+    <button class="delete-btn">Delete</button>
+  </div>
+</div>

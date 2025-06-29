@@ -1,9 +1,9 @@
-export interface BodyComposition {
-  kilograms: number;
+export interface BodyCompositionModel {
+  date: string;
+  weight: number;
   bodyFat: number;
   muscleMass: number;
   bodyWater: number;
   boneMass: number;
-  muscleRecovery: number;
   metabolicAge: number;
 }

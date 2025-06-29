@@ -19,7 +19,7 @@ $white: #fff;
   color: $text-dark;
 
   h2 {
-    color: $accent-green;
+    color: $text-dark;
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 1.2rem;
@@ -63,20 +63,20 @@ $white: #fff;
 
     .edit-btn {
       background: rgba($accent-green, 0.9);
-      color: $white;
+      color: $text-dark;
       &:hover {
         background: $accent-green;        
-        color: $white;
+        color: $text-dark;
       }
     }
 
     .delete-btn {
       background: $white;
-      color: $accent-green;
+      color: $text-dark;
       border: 2px solid $accent-green;
       &:hover {
         background: $accent-green;
-        color: $white;
+        color: $text-dark;
       }
     }
   }

@@ -1,0 +1,171 @@
+$accent-green: #6be585;
+$white: #fff;
+$text-dark: #222;
+$text-light: #888;
+
+// Overlay covering the whole screen
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 30, 30, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+
+// The actual modal box
+.modal {
+  background: $white;
+  border-radius: 20px;
+  box-shadow: 0 2px 18px rgba(0,0,0,0.14);
+  padding: 2.3rem 2rem 1.2rem 2rem;
+  min-width: 340px;
+  max-width: 420px;
+  width: 100%;
+}
+
+// Modal header (title + close button)
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+
+  h3 {
+    margin: 0;
+    color: $accent-green;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .close-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: $text-dark;
+    cursor: pointer;
+    transition: color 0.15s;
+    line-height: 1;
+    &:hover {
+      color: $accent-green;
+    }
+  }
+}
+
+// The form
+form {
+  .form-group {
+    margin-bottom: 1.3rem;
+
+    label {
+      font-weight: 600;
+      color: $text-dark;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.5rem 0.7rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+      outline: none;
+      transition: border 0.2s;
+      &:focus {
+        border: 1.5px solid $accent-green;
+      }
+    }
+  }
+
+  // Exercises list with add/remove
+  .exercises-section {
+    .exercises-list {
+      .exercise-row {
+        display: flex;
+        gap: 0.7rem;
+        margin-bottom: 0.6rem;
+
+        input {
+          flex: 1 1 0;
+        }
+        .remove-exercise-btn {
+          background: $white;
+          border: 2px solid $accent-green;
+          color: $text-dark;
+          border-radius: 8px;
+          font-size: 1.1rem;
+          width: 34px;
+          height: 34px;
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s;
+          line-height: 0;
+          &:hover {
+            background: $accent-green;
+            color: $white;
+          }
+        }
+      }
+    }
+    .add-exercise-btn {
+      background: $accent-green;
+      color: $text-dark;
+      border: none;
+      border-radius: 8px;
+      padding: 0.4rem 1.1rem;
+      font-size: 0.97rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+      &:hover {
+        background: darken($accent-green, 8%);
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.1rem;
+    margin-top: 1.5rem;
+    .save-btn {
+      background: $accent-green;
+      color: $text-dark;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.6rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      &:hover { background: darken($accent-green, 8%);}
+    }
+    .cancel-btn {
+      background: $white;
+      color: $text-dark;
+      border: 2px solid $accent-green;
+      border-radius: 8px;
+      padding: 0.6rem 1.4rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      &:hover {
+        background: $accent-green;
+        color: $white;
+      }
+    }
+  }
+}
+
+// Responsive: modal stays nice on mobile
+@media (max-width: 500px) {
+  .modal {
+    padding: 1.1rem 0.4rem 1rem 0.4rem;
+    min-width: 0;
+    max-width: 98vw;
+  }
+}

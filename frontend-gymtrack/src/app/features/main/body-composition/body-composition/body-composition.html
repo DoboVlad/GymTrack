@@ -1,1 +1,16 @@
-<p>body-composition works!</p>
+@if (this.showAddBodycompModal()) {
+<app-add-composition (save)="onBodyCompSave($event)" (cancel)="onCancel()">
+</app-add-composition>
+}
+
+<div class="bodycomp-page">
+  <div class="bodycomp-header">
+    <h2>Body Composition – Check your body progress</h2>
+    <button class="add-measure-btn" (click)="showAddBodycompModal.set(true)">
+      Add new measures
+    </button>
+  </div>
+  <div class="bodycomp-table-wrapper">
+    <app-body-composition-table [bodyCompositions]="bodyCompositions()" />
+  </div>
+</div>
