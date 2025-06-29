@@ -1,17 +1,23 @@
 <div class="gt-login">
   <div class="gt-login__card">
     <h2 class="gt-login__title">Welcome Back</h2>
-    <form>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
       <div class="gt-login__field">
         <label for="email">Email<span>*</span></label>
-        <input type="email" id="email" required>
+        <input formControlName="email" type="email" id="email" required>
+        @if (emailIsInvalid) {
+          <p class="gt-login__error"> Please enter a valid email! </p> 
+        }
       </div>
       <div class="gt-login__field">
         <label for="password">Password<span>*</span></label>
-        <input type="password" id="password" required>
+        <input formControlName="password" type="password" id="password" required>
+        @if (passwordIsInvalid) {
+          <p class="gt-login__error"> Please enter a valid password! </p> 
+        }
       </div>
       <div class="gt-login__btn-row">
-        <button class="gt-login__btn" type="submit" routerLink="/main">Log In</button>
+        <button [disabled]="loginForm.invalid" class="gt-login__btn" type="submit">Log In</button>
       </div>
       <div class="gt-login__switch">
         Don’t have an account?

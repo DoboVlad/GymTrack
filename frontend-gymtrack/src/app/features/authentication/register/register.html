@@ -1,61 +1,155 @@
 <div class="gt-register">
   <div class="gt-register__card">
     <h2 class="gt-register__title">Create Account</h2>
-    <form>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegisterForm()">
       <div class="gt-register__grid">
         <div class="gt-register__col">
+          <!-- First Name -->
           <div class="gt-register__field">
             <label for="firstName">First name<span>*</span></label>
-            <input type="text" id="firstName" required />
+            <input
+              type="text"
+              id="firstName"
+              required
+              formControlName="firstName"
+            />
+            @if (isControlInvalid('firstName')) {
+            <p class="gt-register__error">First name is required!</p>
+            }
           </div>
-           <div class="gt-register__field">
+          <!-- Last Name -->
+          <div class="gt-register__field">
             <label for="lastName">Last name<span>*</span></label>
-            <input type="text" id="lastName" required />
+            <input
+              type="text"
+              id="lastName"
+              required
+              formControlName="lastName"
+            />
+            @if (isControlInvalid('lastName')) {
+            <p class="gt-register__error">Last name is required!</p>
+            }
           </div>
+          <!-- Email -->
           <div class="gt-register__field">
             <label for="email">Email<span>*</span></label>
-            <input type="email" id="email" required />
+            <input type="email" id="email" required formControlName="email" />
+            @if (isControlInvalid('email')) { 
+              @if (hasError('email', 'required')) {
+            <p class="gt-register__error">Email is required!</p>
+            } @if (hasError('email', 'email')) {
+            <p class="gt-register__error">
+              Please enter a valid email address!
+            </p>
+            } }
           </div>
+          <!-- Password -->
           <div class="gt-register__field">
             <label for="password">Password<span>*</span></label>
-            <input type="password" id="password" required />
+            <input
+              type="password"
+              id="password"
+              required
+              formControlName="password"
+            />
+            @if (isControlInvalid('password')) { 
+              @if (hasError('password', 'required')) {
+                <p class="gt-register__error">Password is required!</p>
+              } @if (hasError('password', 'minlength')) {
+                <p class="gt-register__error">
+                Password must be at least 7 characters!
+                </p>
+              }
+            }
           </div>
+          <!-- Confirm Password -->
           <div class="gt-register__field">
             <label for="confirmPassword">Confirm password<span>*</span></label>
-            <input type="text" id="confirmPassword" required />
+            <input
+              type="password"
+              id="confirmPassword"
+              required
+              formControlName="confirmPassword"
+            />
+            @if (isControlInvalid('confirmPassword')) {
+            <p class="gt-register__error">Confirm password is required!</p>
+            }
+            <!-- If you add password match validation, show the error here -->
           </div>
         </div>
 
         <div class="gt-register__col">
+          <!-- Phone (optional) -->
           <div class="gt-register__field">
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" />
+            <input type="tel" id="phone" formControlName="phone" />
           </div>
+          <!-- Date of Birth -->
           <div class="gt-register__field">
             <label for="dob">Date of Birth<span>*</span></label>
-            <input type="date" id="dob" required />
+            <input type="date" id="dob" required formControlName="dob" />
+            @if (isControlInvalid('dob')) {
+            <p class="gt-register__error">Date of birth is required!</p>
+            }
           </div>
+          <!-- Kilograms -->
           <div class="gt-register__field">
             <label for="kg">Kilograms<span>*</span></label>
-            <input type="number" id="kg" required min="1" />
+            <input
+              type="number"
+              id="kg"
+              required
+              min="1"
+              formControlName="kg"
+            />
+            @if (isControlInvalid('kg')) { 
+              @if (hasError('kg', 'required')) {
+                <p class="gt-register__error">Kilograms is required!</p>
+              } @if (hasError('kg', 'min')) {
+                <p class="gt-register__error">Kilograms must be at least 1!</p>
+              }
+            }
           </div>
-           <div class="gt-register__field">
+          <!-- Height -->
+          <div class="gt-register__field">
             <label for="height">Height<span>*</span></label>
-            <input type="number" id="height" required min="1" />
+            <input
+              type="number"
+              id="height"
+              required
+              min="1"
+              formControlName="height"
+            />
+            @if (isControlInvalid('height')) { @if (hasError('height',
+            'required')) {
+            <p class="gt-register__error">Height is required!</p>
+            } @if (hasError('height', 'min')) {
+            <p class="gt-register__error">Height must be at least 1!</p>
+            } }
           </div>
+          <!-- Gender -->
           <div class="gt-register__field">
             <label for="gender">Gender<span>*</span></label>
-            <select id="gender" required>
+            <select id="gender" required formControlName="gender">
               <option value="" disabled selected>Select gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
             </select>
+            @if (isControlInvalid('gender')) {
+            <p class="gt-register__error">Gender is required!</p>
+            }
           </div>
         </div>
       </div>
       <div class="gt-register__btn-row">
-        <button class="gt-register__btn" type="submit">Register</button>
+        <button
+          class="gt-register__btn"
+          type="submit"
+          [disabled]="registerForm.invalid"
+        >
+          Register
+        </button>
       </div>
       <div class="gt-register__switch">
         Already have an account?

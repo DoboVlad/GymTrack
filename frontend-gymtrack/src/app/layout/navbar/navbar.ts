@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ChartPieIcon, DumbbellIcon, HouseIcon, LucideAngularModule, TrendingUpIcon, UserIcon } from 'lucide-angular';
 
 @Component({
   selector: 'app-navbar',
-  imports: [LucideAngularModule, RouterLink],
+  imports: [LucideAngularModule, RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
