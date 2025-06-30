@@ -6,7 +6,7 @@ CREATE TABLE user_tbl (
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(20),
     date_of_birth DATE NOT NULL,
-    gender VARCHAR(10) NOT NULL,
+    gender ENUM('male','female','other') NOT NULL,
     height_initial DECIMAL(5,2) NOT NULL,
     weight_initial DECIMAL(5,2) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -15,32 +15,34 @@ CREATE TABLE user_tbl (
 
 CREATE TABLE workout (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
+    user_id INT NOT NULL,
     type VARCHAR(50) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES user_tbl(id)
+    FOREIGN KEY (user_id) REFERENCES user_tbl(id) ON DELETE CASCADE
 );
 
 CREATE TABLE exercise (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    workout_id INT,
+    workout_id INT NOT NULL,
     name VARCHAR(100) NOT NULL,
-    weight DECIMAL(5,2) NOT NULL,
-    FOREIGN KEY (workout_id) REFERENCES workout(id)
+    weight DECIMAL(5,2),
+    reps INT,
+    sets INT,
+    duration INT, -- in seconds, nullable
+    FOREIGN KEY (workout_id) REFERENCES workout(id) ON DELETE CASCADE
 );
 
 CREATE TABLE body_composition (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
+    user_id INT NOT NULL,
     weight DECIMAL(5,2) NOT NULL,
     body_fat DECIMAL(5,2) NOT NULL,
     muscle_mass DECIMAL(5,2) NOT NULL,
     body_water DECIMAL(5,2) NOT NULL,
     metabolic_age INT NOT NULL,
-    picture_url VARCHAR(255) NOT NULL,
-    muscle_recovery VARCHAR(100) NOT NULL,
+    picture_url VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES user_tbl(id)
+    FOREIGN KEY (user_id) REFERENCES user_tbl(id) ON DELETE CASCADE
 );

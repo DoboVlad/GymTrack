@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-register',
@@ -33,7 +34,7 @@ export class Register {
     gender: new FormControl('', [Validators.required]),
   });
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) { }
 
   // Generic control accessor
   control(controlName: string): AbstractControl | null {
@@ -53,10 +54,23 @@ export class Register {
 
   onSubmitRegisterForm() {
     this.formSubmitted.set(true);
-    if(this.registerForm.invalid) {
-      return;
-    }
+    // if (this.registerForm.invalid) {
+    //   return;
+    // }
+    console.log('Register form submitted:', this.registerForm.value);
+    this.authService.register(this.registerForm.value).subscribe({
+      next: (response) => {
+        console.log('Registration successful:', response);
+        this.navigateToMain();
+      },
+      error: (error) => {
+        console.error('Registration failed:', error);
+        // Handle error, e.g., show a message to the user
+      }
+    });
+  }
 
+  private navigateToMain() {
     this.router.navigate(['/main']);
   }
 }

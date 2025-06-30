@@ -2,6 +2,7 @@ const userRepository = require("../repositories/userRepository");
 const bcrypt = require("bcrypt");
 
 exports.registerUser = async (userData) => {
+  console.log("Registering user:", userData);
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(userData.password, salt);
   return userRepository.createUser({ ...userData, password: hashedPassword });

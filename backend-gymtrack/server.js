@@ -1,8 +1,10 @@
 const express = require("express");
+const cors = require('cors');
 const app = express();
-const PORT = 3000;
 const userRoutes = require("./routes/userRoutes");
+const sequelize = require("./config/database");
 
+app.use(cors({ origin: 'http://localhost:4200' }));
 app.use(express.json()); // for parsing application/json
 
 app.use("/api/users", userRoutes);

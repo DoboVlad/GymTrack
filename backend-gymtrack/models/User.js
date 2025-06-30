@@ -14,7 +14,7 @@ const User = sequelize.define('User', {
   created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   updated_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 }, {
-  tableName: 'users',
+  tableName: 'user_tbl',
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',
