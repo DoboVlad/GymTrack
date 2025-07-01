@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { Workout } from '../../../models/workout';
 import { WorkoutCard } from './workout-card/workout-card';
 import { AddWorkout } from "./add-workout/add-workout";
+import { WorkoutService } from '../../services/workout/workout';
 
 @Component({
   selector: 'app-workouts',
@@ -41,13 +42,24 @@ export class Workouts {
     },
   ]);
 
+  constructor(private workoutService: WorkoutService) {}
+
   onClickDisplayAddModal() {
     this.isAddModalShown.set(true);
   }
 
   onModalSave(workout: Workout) {
-    this.workouts.update(old => [...old, workout]);
-    this.isAddModalShown.set(false);
+    this.workoutService.createWorkout(workout).subscribe({
+      next: (response) => {
+        this.workouts.update(old => [...old, response]);
+        console.log('Workout created successfully:', response);
+      },
+      error: (error) => {
+        console.error('Error creating workout:', error);
+      },
+    });
+
+    // this.isAddModalShown.set(false);
   }
 
   onModalCancel() {

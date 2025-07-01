@@ -1,5 +1,5 @@
 const userService = require("../services/userService");
-const { mapUserPayload } = require("../mapper/userMapper");
+const { mapUserPayload, mapUserToViewModel } = require("../mapper/userMapper");
 const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
@@ -21,10 +21,20 @@ exports.login = async (req, res) => {
   const token = jwt.sign(
     { userId: user.id, email: user.email },
     process.env.JWT_SECRET,
-    { expiresIn: "1d" }
+    { expiresIn: process.env.JWT_EXPIRATION || "1h" }
   );
   res.json({
     token,
     user: { id: user.id, email: user.email, first_name: user.first_name },
   });
+};
+
+exports.getLoggedInUser = async (req, res) => {
+  const userId = req.user.userId; // Assuming req.user is set by auth middleware
+  if (!userId) return res.status(400).json({ message: "No such user exist" + userId });
+
+  const user = await userService.getUserById(userId);
+
+  let userViewModel = mapUserToViewModel(user);
+  res.json({ user: userViewModel });
 };

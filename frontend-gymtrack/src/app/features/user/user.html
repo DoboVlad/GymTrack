@@ -2,15 +2,15 @@
   <h2>User Profile</h2>
   <div class="profile-row">
     <span class="profile-label">First Name:</span>
-    <span class="profile-value">John</span>
+    <span class="profile-value">{{ user()?.firstName }}</span>
   </div>
   <div class="profile-row">
     <span class="profile-label">Last Name:</span>
-    <span class="profile-value">Doe</span>
+    <span class="profile-value">{{ user()?.lastName }}</span>
   </div>
   <div class="profile-row">
     <span class="profile-label">Email:</span>
-    <span class="profile-value">john&#64;email.com</span>
+    <span class="profile-value">{{ user()?.email }}</span>
   </div>
   <div class="profile-row">
     <span class="profile-label">Password:</span>
@@ -18,15 +18,15 @@
   </div>
   <div class="profile-row">
     <span class="profile-label">Phone:</span>
-    <span class="profile-value">+123456789</span>
+    <span class="profile-value">{{ user()?.phone }}</span>
   </div>
   <div class="profile-row">
     <span class="profile-label">Date of Birth:</span>
-    <span class="profile-value">2000-01-01</span>
+    <span class="profile-value">{{ user()?.dob }}</span>
   </div>
   <div class="profile-row">
     <span class="profile-label">Gender:</span>
-    <span class="profile-value">Male</span>
+    <span class="profile-value">{{ user()?.gender }}</span>
   </div>
   <div class="profile-actions">
     <button class="edit-btn">Edit Account</button>

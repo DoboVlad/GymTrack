@@ -80,6 +80,11 @@ form {
     }
   }
 
+  .error {
+    color: red;
+    font-size: 0.9rem;
+  }
+
   // Exercises list with add/remove
   .exercises-section {
     .exercises-list {

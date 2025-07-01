@@ -1,42 +1,88 @@
 import { Component, output } from '@angular/core';
 import { Workout } from '../../../../models/workout';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AtLeastOneExerciseValidator } from '../../../../validators/atLeastOneExerciseValidator';
+import { Exercise } from '../../../../models/exercise';
 
 @Component({
   selector: 'app-add-workout',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './add-workout.html',
   styleUrl: './add-workout.scss',
 })
 export class AddWorkout {
+  addWorkoutForm = new FormGroup({
+    workoutType: new FormControl<'Push day' | 'Pull day' | 'Legs day' | ''>('', {
+      validators: [Validators.required],
+    }),
+    workoutDate: new FormControl('', {
+      validators: [Validators.required],
+    }),
+    exercises: new FormArray([], {
+      validators: [AtLeastOneExerciseValidator.atLeastOne],
+    })
+  });
   save = output<Workout>();
   cancel = output<void>();
   workoutTypes = ['Push Day', 'Pull Day', 'Legs Day'];
 
-  workout: Workout = {
-    type: '',
-    date: '',
-    exercises: [{ name: '', weight: 0 }],
-  };
+  get exercises(): FormArray {
+    return this.addWorkoutForm.get('exercises') as FormArray;
+  }
+
+  get isWorkoutTypeValid(): boolean {
+    const workoutTypeControl = this.addWorkoutForm.controls.workoutType;
+    return workoutTypeControl.touched && workoutTypeControl.invalid;
+  }
+
+  get isWorkoutDateValid(): boolean {
+    const workoutDateControl = this.addWorkoutForm.controls.workoutDate;
+    return workoutDateControl.touched && workoutDateControl.invalid;
+  }
+
+  get IsWorkoutExercisesValid(): boolean {
+    const exercisesControl = this.addWorkoutForm.controls.exercises;
+    return exercisesControl.touched && exercisesControl.invalid && exercisesControl.errors?.['atLeastOne'];
+  }
+
+  get isExercisesInvalid(): boolean {
+    const exercisesArray = this.addWorkoutForm.get('exercises') as FormArray;
+    return exercisesArray.touched && exercisesArray.controls.some(control => control.invalid);
+  }
 
   addExercise() {
-    this.workout.exercises.push({ name: '', weight: 0 });
+    const exerciseGroup = new FormGroup({
+      name: new FormControl('', Validators.required),
+      weight: new FormControl(0, [Validators.required, Validators.min(0)])
+    });
+
+    (this.addWorkoutForm.get('exercises') as FormArray).push(exerciseGroup);
   }
 
   removeExercise(idx: number) {
-    this.workout.exercises.splice(idx, 1);
+    (this.addWorkoutForm.get('exercises') as FormArray).removeAt(idx);
   }
 
   onSave() {
-    // Convert weight fields
-    this.workout.exercises = this.workout.exercises.map(e => ({
-      name: e.name,
-      weight: isNaN(Number(e.weight)) || (e.weight + '').toLowerCase() === 'bodyweight'
-        ? 'bodyweight'
-        : Number(e.weight)
-    }));
-    this.save.emit({ ...this.workout });
+    if (this.addWorkoutForm.invalid) {
+      this.addWorkoutForm.markAllAsTouched();
+      console.log('Form is invalid, please correct the errors.');
+      return;
+    }
+
+    const formValue = this.addWorkoutForm.value as {
+      workoutType: Workout['type'];
+      workoutDate: string;
+      exercises: Exercise[];
+    };
+
+    const workout: Workout = {
+      type: formValue.workoutType,
+      date: formValue.workoutDate,
+      exercises: formValue.exercises
+    };
+
+    this.save.emit(workout);
     this.reset();
   }
 
@@ -46,10 +92,5 @@ export class AddWorkout {
   }
 
   reset() {
-    this.workout = {
-      type: '',
-      date: '',
-      exercises: [{ name: '', weight: 0 }]
-    };
   }
 }

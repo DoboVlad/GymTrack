@@ -1,7 +1,9 @@
 <div class="app-wrapper">
   <app-header />
   <div class="app-main-layout">
-    <app-navbar />
+    @if (authService.getIsLoggedIn()) {
+      <app-navbar />
+    }
     <div class="app-main">
       <router-outlet />
     </div>

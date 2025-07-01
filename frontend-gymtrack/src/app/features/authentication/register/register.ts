@@ -28,7 +28,7 @@ export class Register {
     confirmPassword: new FormControl('', [Validators.required]),
 
     phone: new FormControl(''), // Optional, so no validators
-    dob: new FormControl('', [Validators.required]),
+    dateOfBirth: new FormControl('', [Validators.required]),
     kg: new FormControl('', [Validators.required, Validators.min(1)]),
     height: new FormControl('', [Validators.required, Validators.min(1)]),
     gender: new FormControl('', [Validators.required]),
@@ -54,23 +54,34 @@ export class Register {
 
   onSubmitRegisterForm() {
     this.formSubmitted.set(true);
-    // if (this.registerForm.invalid) {
-    //   return;
-    // }
-    console.log('Register form submitted:', this.registerForm.value);
-    this.authService.register(this.registerForm.value).subscribe({
+    if (this.registerForm.invalid) {
+      return;
+    }
+    const formValue = this.registerForm.value;
+    const userData = {
+      firstName: formValue.firstName ?? '',
+      lastName: formValue.lastName ?? '',
+      email: formValue.email ?? '',
+      password: formValue.password ?? '',
+      confirmPassword: formValue.confirmPassword ?? '',
+      phone: formValue.phone ?? '',
+      dateOfBirth: formValue.dateOfBirth ?? '',
+      kg: formValue.kg ?? '',
+      height: formValue.height ?? '',
+      gender: formValue.gender ?? ''
+    };
+    this.authService.register(userData).subscribe({
       next: (response) => {
         console.log('Registration successful:', response);
-        this.navigateToMain();
+        this.navigateToLogin();
       },
       error: (error) => {
         console.error('Registration failed:', error);
-        // Handle error, e.g., show a message to the user
       }
     });
   }
 
-  private navigateToMain() {
-    this.router.navigate(['/main']);
+  private navigateToLogin() {
+    this.router.navigate(['/login']);
   }
 }

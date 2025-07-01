@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class Login {
   });
   formSubmitted = signal(false);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) { }
 
   get emailIsInvalid() {
     const email = this.loginForm.controls.email;
@@ -41,7 +42,21 @@ export class Login {
     if (this.loginForm.invalid) {
       return;
     }
-    this.router.navigate(['/main']);
+
+    let email = this.loginForm.controls.email.value!;
+    let password = this.loginForm.controls.password.value!;
+
+    this.authService.login(email, password).subscribe({
+      next: (response) => {
+        console.log('Login successful:', response);
+        this.router.navigate(['/main']);
+
+      },
+      error: (error) => {
+        console.error('Login failed:', error);
+        // Handle error, e.g., show a message to the user
+      },
+    });
     this.formSubmitted.set(false);
   }
 }

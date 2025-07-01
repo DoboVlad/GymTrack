@@ -1,17 +1,42 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { User } from '../../features/user/user';
-import { Observable } from 'rxjs';
+import { computed, Injectable, signal } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
+import { UserModel } from '../../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private tokenSignal = signal<string | null>(localStorage.getItem('token'));
+  readonly isLoggedInSignal = computed(() => !!this.tokenSignal());
 
   constructor(private httpClient: HttpClient) { }
 
-  register(user: User): Observable<User> {
-    return this.httpClient.post<User>(`${environment.apiUrl}/api/users/register`, { user });
+  register(user: UserModel): Observable<UserModel> {
+    return this.httpClient.post<UserModel>(`${environment.apiUrl}/api/users/register`, { user });
+  }
+
+  login(email: string, password: string): Observable<{ token: string, user: UserModel }> {
+    return this.httpClient.post<{ token: string, user: UserModel }>(`${environment.apiUrl}/api/users/login`, { email, password })
+      .pipe(
+        tap(response => {
+          this.tokenSignal.set(response.token)
+          localStorage.setItem('token', response.token)
+        })
+      );
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.tokenSignal.set(null);
+  }
+
+  getToken(): string | null {
+    return this.tokenSignal();
+  }
+
+  getIsLoggedIn(): boolean {
+    return this.isLoggedInSignal();
   }
 }
