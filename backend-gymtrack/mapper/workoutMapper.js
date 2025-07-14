@@ -15,6 +15,7 @@ export function mapWorkoutToViewModel(workout) {
     return {
         userId: workout.user_id,
         date: workout.created_at,
+        id: workout.id,
         type: workout.type,
         exercises: workout.exercises.map(exercise => ({
             name: exercise.name,

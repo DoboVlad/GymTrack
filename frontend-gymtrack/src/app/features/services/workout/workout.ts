@@ -13,4 +13,12 @@ export class WorkoutService {
   createWorkout(workout: Workout) {
     return this.httpClient.post<Workout>(`${environment.apiUrl}/api/workout`, workout);
   }
+
+  getWorkouts(page: number, limit: number = 300) {
+    return this.httpClient.get<Workout[]>(`${environment.apiUrl}/api/workout?page=${page}&limit=${limit}`);
+  }
+
+  deleteWorkout(workoutId: string) {
+    return this.httpClient.delete(`${environment.apiUrl}/api/workout/${workoutId}`);
+  }
 }

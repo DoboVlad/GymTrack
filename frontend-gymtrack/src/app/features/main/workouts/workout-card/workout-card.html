@@ -1,7 +1,7 @@
 <div class="workout-card">
   <div class="workout-header">
     <span class="workout-type">{{ workout().type }}</span>
-    <span class="workout-date">{{ workout().date }}</span>
+    <span class="workout-date">{{ workout().date | date: 'mediumDate' }}</span>
   </div>
   <div class="exercises-list">
     @for (exercise of workout().exercises; track $index) {
@@ -10,6 +10,6 @@
   </div>
   <div class="workout-actions">
     <button class="edit-btn">Edit</button>
-    <button class="delete-btn">Delete</button>
+    <button class="delete-btn" (click)="onClickDeleteWorkout(workout().id!)">Delete</button>
   </div>
 </div>

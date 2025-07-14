@@ -1,5 +1,5 @@
 @if (isAddModalShown()) {
-  <app-add-workout (save)="onModalSave($event)" (cancel)="onModalCancel()"/>
+<app-add-workout (save)="onModalSave($event)" (cancel)="onModalCancel()" />
 }
 
 <div class="workouts-page">
@@ -7,9 +7,19 @@
     <h2>Add a new workout and track your progress on this page</h2>
     <button class="add-workout-btn" (click)="onClickDisplayAddModal()">Add Workout</button>
   </div>
+  @if(workouts().length === 0) {
+  <div class="no-workouts-message">
+    <p>No workouts found. Please add a workout to get started.</p>
+  </div>
+  } @else {
   <div class="workouts-list">
     @for (workout of workouts(); track $index) {
-      <app-workout-card [workout]="workout" /> 
+    <app-workout-card [workout]="workout" (deleteWorkout)="onDeleteWorkout($event)" />
     }
   </div>
+  @if (isEndOfData()) {
+  <div class="no-more-data">You've reached the end!</div>
+  }
+  }
+
 </div>

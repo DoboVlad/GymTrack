@@ -20,17 +20,17 @@ exports.createWorkout = async (payload) => {
             await Promise.all(exercises.map(exercise => exerciseRepository.createExercise(exercise)));
         }
 
-        return workout;
+        return await workoutRepository.findByPk(workout.id); // Return the created workout with its exercises
     } catch (error) {
         console.error("Error creating workout:", error);
         throw new Error("Failed to create workout");
     }
 }
 
-exports.getWorkoutsByUserId = async (userId) => {
+exports.getWorkoutsByUserId = async (userId, page, limit) => {
     try {
         // Assuming you have a method to fetch workouts by userId
-        const workouts = await workoutRepository.findByUserId(userId);
+        const workouts = await workoutRepository.findByUserId(userId, page, limit);
 
         let mappedWorkouts = [];
         if (Array.isArray(workouts)) {
@@ -43,5 +43,18 @@ exports.getWorkoutsByUserId = async (userId) => {
     } catch (error) {
         console.error("Error fetching workouts:", error);
         throw new Error("Failed to fetch workouts");
+    }
+}
+
+exports.deleteWorkout = async (workoutId) => {
+    try {
+        // First, delete all exercises associated with the workout
+        await exerciseRepository.deleteExercisesByWorkoutId(workoutId);
+
+        // Then, delete the workout itself
+        await workoutRepository.deleteWorkout(workoutId);
+    } catch (error) {
+        console.error("Error deleting workout:", error);
+        throw new Error("Failed to delete workout");
     }
 }

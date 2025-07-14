@@ -8,7 +8,7 @@ import { UserModel } from '../../models/user';
   providedIn: 'root'
 })
 export class AuthService {
-  private tokenSignal = signal<string | null>(localStorage.getItem('token'));
+  private tokenSignal = signal<string | null>(sessionStorage.getItem('token'));
   readonly isLoggedInSignal = computed(() => !!this.tokenSignal());
 
   constructor(private httpClient: HttpClient) { }
@@ -22,13 +22,13 @@ export class AuthService {
       .pipe(
         tap(response => {
           this.tokenSignal.set(response.token)
-          localStorage.setItem('token', response.token)
+          sessionStorage.setItem('token', response.token)
         })
       );
   }
 
   logout() {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     this.tokenSignal.set(null);
   }
 
