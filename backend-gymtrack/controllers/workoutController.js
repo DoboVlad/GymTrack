@@ -14,7 +14,7 @@ exports.createWorkout = async (req, res) => {
     const payload = req.body;
     payload.userId = userId; // Add userId to the payload
     // redirect to workout service
-    const workout = workoutService.createWorkout(payload);
+    const workout = await workoutService.createWorkout(payload);
 
     return res.status(201).json({
         message: "Workout created successfully",

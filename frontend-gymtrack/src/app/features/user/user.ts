@@ -20,7 +20,6 @@ export class User {
   private getUserById() {
     this.userService.getLoggedInUser().subscribe({
       next: (user) => {
-        console.log("User fetched successfully:", user);
         this.user.set(user.user);
       },
       error: (err) => {

@@ -27,7 +27,7 @@ export class Workouts implements OnInit {
     const height = document.body.scrollHeight;
 
     if (position > height - threshold) {
-      this.scroll$.next(); // ✅ only when near bottom
+      this.scroll$.next(); // only when near bottom
     }
   }
 
@@ -61,8 +61,8 @@ export class Workouts implements OnInit {
   onModalSave(workout: Workout) {
     this.workoutService.createWorkout(workout).subscribe({
       next: (response: any) => {
-        this.workouts.update(old => [...old, response]);
-        console.log('Workout created successfully:', response.workout);
+        const newWorkout: Workout = response.workout;
+        this.workouts.update(old => [newWorkout, ...old]);
       },
       error: (error) => {
         console.error('Error creating workout:', error);

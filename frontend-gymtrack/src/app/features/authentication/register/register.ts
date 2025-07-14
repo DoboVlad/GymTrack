@@ -72,7 +72,6 @@ export class Register {
     };
     this.authService.register(userData).subscribe({
       next: (response) => {
-        console.log('Registration successful:', response);
         this.navigateToLogin();
       },
       error: (error) => {
