@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { BodyCompositionModel } from '../../../../models/body-composition';
 
 @Component({
@@ -9,4 +9,15 @@ import { BodyCompositionModel } from '../../../../models/body-composition';
 })
 export class BodyCompositionTable {
   bodyCompositions = input.required<BodyCompositionModel[]>();
+  onDeleteBodyComposition = output<string>();
+  onEditBodyComposition = output<BodyCompositionModel>();
+
+  onClickDeleteBodyComposition(bodyCompId: string) {
+    this.onDeleteBodyComposition.emit(bodyCompId);
+  }
+
+  onClickEditBodyComposition(bodyComp: BodyCompositionModel) {
+    this.onEditBodyComposition.emit(bodyComp);
+  }
+
 }

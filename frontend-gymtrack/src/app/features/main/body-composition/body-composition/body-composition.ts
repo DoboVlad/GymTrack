@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { BodyCompositionTable } from '../body-composition-table/body-composition-table';
 import { AddComposition } from '../add-composition/add-composition';
 import { BodyCompositionModel } from '../../../../models/body-composition';
+import { BodyCompositionService } from '../../../services/body-composition/body-composition';
 
 @Component({
   selector: 'app-body-composition',
@@ -9,43 +10,80 @@ import { BodyCompositionModel } from '../../../../models/body-composition';
   templateUrl: './body-composition.html',
   styleUrl: './body-composition.scss',
 })
-export class BodyComposition {
+export class BodyComposition implements OnInit {
   showAddBodycompModal = signal(false);
-  bodyCompositions = signal<BodyCompositionModel[]>([
-    {
-      date: '2025-06-28',
-      weight: 80,
-      bodyFat: 15,
-      muscleMass: 60,
-      bodyWater: 55,
-      boneMass: 3.2,
-      metabolicAge: 25,
-    },
-    {
-      date: '2025-06-21',
-      weight: 81,
-      bodyFat: 15.5,
-      muscleMass: 59,
-      bodyWater: 54,
-      boneMass: 3.2,
-      metabolicAge: 26,
-    },
-    {
-      date: '2025-06-14',
-      weight: 82,
-      bodyFat: 16,
-      muscleMass: 58,
-      bodyWater: 53,
-      boneMass: 3.1,
-      metabolicAge: 27,
-    },
-  ]);
+  bodyCompositions = signal<BodyCompositionModel[]>([]);
+  bodyCompositionEdited = signal<BodyCompositionModel | null>(null);
+
+  constructor(private bodyCompositionService: BodyCompositionService) { }
+
+  ngOnInit() {
+    this.loadBodyCompositions();
+  }
+
+  private loadBodyCompositions() {
+    this.bodyCompositionService.getBodyCompositions().subscribe({
+      next: (compositions) => {
+        this.bodyCompositions.set(compositions);
+      },
+      error: (error) => {
+        console.error('Error fetching body compositions:', error);
+      }
+    });
+  }
 
   onBodyCompSave(newComp: BodyCompositionModel) {
-    this.bodyCompositions.update(oldComp => [...oldComp, newComp]);
+    if (this.bodyCompositionEdited()) {
+      this.editBodyComposition(newComp);
+    } else {
+      this.createBodyComposition(newComp);
+    }
+    this.showAddBodycompModal.set(false);
+  }
+
+  onDeleteBodyComposition(bodyCompositionId: string) {
+    console.log('Deleting body composition with ID:', bodyCompositionId);
+    this.bodyCompositionService.deleteBodyComposition(bodyCompositionId).subscribe({
+      next: () => {
+        this.bodyCompositions.update(oldComps => oldComps.filter(comp => comp.id !== bodyCompositionId));
+      },
+      error: (error) => {
+        console.error('Error deleting body composition:', error);
+      }
+    });
+  }
+
+  onEditBodyComposition(bodyComp: BodyCompositionModel) {
+    this.showAddBodycompModal.set(true);
+    this.bodyCompositionEdited.set(bodyComp);
+  }
+
+  private editBodyComposition(bodyComp: BodyCompositionModel) {
+    this.bodyCompositionService.updateBodyComposition(bodyComp).subscribe({
+      next: (updatedComp) => {
+        this.bodyCompositions.update(oldComps => oldComps.map(comp => comp.id === updatedComp.id ? updatedComp : comp));
+        this.bodyCompositionEdited.set(null);
+      },
+      error: (error) => {
+        console.error('Error updating body composition:', error);
+      }
+    });
+  }
+
+  private createBodyComposition(bodyComp: BodyCompositionModel) {
+    this.bodyCompositionService.createBodyComposition(bodyComp).subscribe({
+      next: (createdComp) => {
+        this.bodyCompositions.update(oldComp => [createdComp, ...oldComp]);
+        this.bodyCompositionEdited.set(null);
+      },
+      error: (error) => {
+        console.error('Error creating body composition:', error);
+      }
+    });
   }
 
   onCancel() {
     this.showAddBodycompModal.set(false);
+    this.bodyCompositionEdited.set(null);
   }
 }

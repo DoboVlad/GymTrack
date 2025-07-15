@@ -22,8 +22,8 @@
       <td>{{ comp.boneMass }}</td>
       <td>{{ comp.metabolicAge }}</td>
       <td>
-        <button class="edit-btn">Edit</button>
-        <button class="delete-btn">Delete</button>
+        <button class="edit-btn" (click)="onClickEditBodyComposition(comp)">Edit</button>
+        <button class="delete-btn" (click)="onClickDeleteBodyComposition(comp.id!)">Delete</button>
       </td>
     </tr>
     }

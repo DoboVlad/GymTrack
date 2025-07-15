@@ -13,6 +13,7 @@ import { LastBodyComposition } from "../body-composition/last-body-composition/l
 export class Welcome {
   lastBodyCompDate: any;
   bodyComp: BodyCompositionModel = {
+    id: '1',
     date: 'random date',
     weight: 10,
     bodyFat: 10,
@@ -26,13 +27,15 @@ export class Welcome {
       name: 'Push day',
       date: new Date().toDateString(),
     },
-     {
+    {
       name: 'Push day',
       date: new Date().toDateString(),
     },
-     {
+    {
       name: 'Push day',
       date: new Date().toDateString(),
     },
   ];
+
+  constructor() { }
 }
