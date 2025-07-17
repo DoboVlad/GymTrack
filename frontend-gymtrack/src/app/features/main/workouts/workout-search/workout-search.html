@@ -1,0 +1,30 @@
+<div class="workout-search">
+  <input
+    type="text"
+    placeholder="Search workouts..."
+    class="search-input"
+    [formControl]="searchTerm"
+  />
+
+  <div class="checkbox-group">
+    <label>
+      <input type="checkbox" [(ngModel)]="dayFilters.pushDay" (ngModelChange)="onSearchChange()" />
+      Push Day
+    </label>
+    <label>
+      <input type="checkbox" [(ngModel)]="dayFilters.pullDay" (ngModelChange)="onSearchChange()" />
+      Pull Day
+    </label>
+    <label>
+      <input type="checkbox" [(ngModel)]="dayFilters.legDay" (ngModelChange)="onSearchChange()" />
+      Legs Day
+    </label>
+  </div>
+
+  <input
+    type="date"
+    class="date-picker"
+    [(ngModel)]="selectedDate"
+    (ngModelChange)="onSearchChange()"
+  />
+</div>

@@ -59,3 +59,12 @@ exports.deleteWorkout = async (req, res) => {
         res.status(500).json({ message: "Failed to delete workout" });
     }
 }
+
+exports.filterWorkouts = async (req, res) => {
+  try {
+    const workouts = await workoutService.filterWorkouts(req.query);
+    res.status(200).json(workouts);
+  } catch (error) {
+    res.status(500).json({ message: "Error filtering workouts", error });
+  }
+};

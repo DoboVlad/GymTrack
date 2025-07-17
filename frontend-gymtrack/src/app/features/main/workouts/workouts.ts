@@ -4,10 +4,11 @@ import { WorkoutCard } from './workout-card/workout-card';
 import { AddWorkout } from "./add-workout/add-workout";
 import { WorkoutService } from '../../services/workout/workout';
 import { debounceTime, Subject } from 'rxjs';
+import { WorkoutFilters, WorkoutSearch } from "./workout-search/workout-search";
 
 @Component({
   selector: 'app-workouts',
-  imports: [WorkoutCard, AddWorkout],
+  imports: [WorkoutCard, AddWorkout, WorkoutSearch],
   templateUrl: './workouts.html',
   styleUrl: './workouts.scss',
 })
@@ -40,6 +41,40 @@ export class Workouts implements OnInit {
 
   onClickDisplayAddModal() {
     this.isAddModalShown.set(true);
+  }
+
+  onFilterWorkouts(filters: WorkoutFilters) {
+    if (this.isEmptyFilter(filters)) {
+      this.getWorkouts();
+    } else {
+      this.getFilteredWorkouts(filters);
+    }
+  }
+
+  private isEmptyFilter(filters: any): boolean {
+    const { searchTerm, selectedDate, dayFilters } = filters;
+
+    const noSearchTerm = !searchTerm || searchTerm.trim() === '';
+    const noDate = !selectedDate;
+    const noDayFilter =
+      !dayFilters.pushDay &&
+      !dayFilters.pullDay &&
+      !dayFilters.legDay;
+
+    return noSearchTerm && noDate && noDayFilter;
+  }
+
+  private getFilteredWorkouts(filters: WorkoutFilters) {
+    this.workoutService.getFilteredWorkouts(filters).subscribe({
+      next: (filteredWorkouts) => {
+        this.workouts.set(filteredWorkouts);
+        this.currentPage.set(1); // Reset to first page on new filter
+        this.isEndOfData.set(filteredWorkouts.length === 0);
+      },
+      error: (error) => {
+        console.error('Error fetching filtered workouts:', error);
+      },
+    });
   }
 
   private getWorkouts() {

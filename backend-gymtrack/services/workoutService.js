@@ -1,6 +1,7 @@
 const { mapWorkoutToDatabaseModel, mapWorkoutToViewModel } = require("../mapper/workoutMapper")
 const workoutRepository = require("../repositories/workoutRepository");
 const exerciseRepository = require("../repositories/exerciseRepository");
+const { Op } = require("sequelize");
 
 exports.createWorkout = async (payload) => {
     // map to database model
@@ -58,3 +59,49 @@ exports.deleteWorkout = async (workoutId) => {
         throw new Error("Failed to delete workout");
     }
 }
+
+exports.filterWorkouts = async (filters) => {
+    try {
+        const where = {};
+        let exerciseWhere = null;
+
+        // Filter by workout name (search term)
+        if (filters.searchTerm) {
+            exerciseWhere = {
+                name: {
+                    [Op.like]: `%${filters.searchTerm}%`
+                }
+            };
+        }
+
+        // Filter by selected date (exact day match)
+        if (filters.selectedDate) {
+            const date = new Date(filters.selectedDate);
+            const nextDay = new Date(date);
+            nextDay.setDate(date.getDate() + 1);
+
+            where.date = {
+                [Op.gte]: date,
+                [Op.lt]: nextDay
+            };
+        }
+
+        // Filter by day types
+        const dayFilters = [];
+        if (filters.pushDay === 'true') dayFilters.push('Push Day');
+        if (filters.pullDay === 'true') dayFilters.push('Pull Day');
+        if (filters.legDay === 'true') dayFilters.push('Legs Day');
+
+        if (dayFilters.length > 0) {
+            where.type = {
+                [Op.in]: dayFilters
+            };
+        }
+
+        // Pass Sequelize-style where clause to repo
+        return await workoutRepository.findFilteredWorkouts(where, exerciseWhere);
+    } catch (error) {
+        console.error("Error filtering workouts:", error);
+        throw new Error("Failed to filter workouts");
+    }
+};

@@ -2,6 +2,8 @@
 <app-add-workout (save)="onModalSave($event)" (cancel)="onModalCancel()" />
 }
 
+<app-workout-search (onFiltersChange)="onFilterWorkouts($event)" />
+
 <div class="workouts-page">
   <div class="workouts-header">
     <h2>Add a new workout and track your progress on this page</h2>
