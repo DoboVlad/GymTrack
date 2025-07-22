@@ -1,6 +1,9 @@
 @if (this.showAddBodycompModal()) {
-<app-add-composition (save)="onBodyCompSave($event)" (cancel)="onCancel()" [bodyCompositionEdited]="bodyCompositionEdited()" />
+<app-add-composition (save)="onBodyCompSave($event)" (cancel)="onCancel()"
+  [bodyCompositionEdited]="bodyCompositionEdited()" />
 }
+
+<app-body-composition-search (onSearch)="onSeachText($event)" />
 
 <div class="bodycomp-page">
   <div class="bodycomp-header">
@@ -10,6 +13,13 @@
     </button>
   </div>
   <div class="bodycomp-table-wrapper">
-    <app-body-composition-table [bodyCompositions]="bodyCompositions()" (onEditBodyComposition)="onEditBodyComposition($event)" (onDeleteBodyComposition)="onDeleteBodyComposition($event)"/>
+    <app-body-composition-table [bodyCompositions]="bodyCompositions()"
+      (onEditBodyComposition)="onEditBodyComposition($event)"
+      (onDeleteBodyComposition)="onDeleteBodyComposition($event)" />
+  </div>
+  <div class="pagination-controls">
+    <button (click)="prevPage()" [disabled]="currentPage() === 1">Previous</button>
+    <span>Page {{ currentPage() }} of {{ totalPages() }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage() === totalPages()">Next</button>
   </div>
 </div>

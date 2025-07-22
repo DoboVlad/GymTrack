@@ -33,8 +33,12 @@ exports.getBodyCompositions = async (req, res) => {
         return res.status(400).json({ message: "No user ID provided" });
     }
 
+    const page = parseInt(req.query.page) || 1;
+    const term = req.query.term || '';
+    const limit = parseInt(req.query.limit) || 20;
+
     try {
-        const bodyCompositions = await bodyCompositionService.getBodyCompositions(userId);
+        const bodyCompositions = await bodyCompositionService.getBodyCompositions(userId, page, limit, term);
         return res.status(200).json(bodyCompositions);
     } catch (error) {
         console.error("Error fetching body compositions:", error);

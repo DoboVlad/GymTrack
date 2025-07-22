@@ -1,5 +1,6 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, HostListener, input, output, signal } from '@angular/core';
 import { BodyCompositionModel } from '../../../../models/body-composition';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-body-composition-table',

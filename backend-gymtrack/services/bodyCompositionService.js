@@ -11,22 +11,26 @@ exports.createBodyComposition = async (bodyCompositionData) => {
     }
 }
 
-exports.getBodyCompositions = async (userId) => {
+exports.getBodyCompositions = async (userId, page, limit, term) => {
     try {
-        const bodyCompositions = await bodyCompoistionRepository.findBodyCompositionsByUserId(userId);
+        const { results, totalCount } = await bodyCompoistionRepository.findBodyCompositionsByUserId(userId, page, limit, term);
 
-        let mappedBodyCompositions = [];
-        if (Array.isArray(bodyCompositions)) {
-            mappedBodyCompositions = bodyCompositions.map(comp => mapBodyCompToViewModel(comp));
-        } else {
-            mappedBodyCompositions = mapBodyCompToViewModel(bodyCompositions);
-        }
-        return mappedBodyCompositions;
+        const mappedBodyCompositions = Array.isArray(results)
+            ? results.map(mapBodyCompToViewModel)
+            : [];
+
+        const totalPages = Math.ceil(totalCount / limit);
+
+        return {
+            data: mappedBodyCompositions,
+            totalPages,
+            currentPage: page
+        };
     } catch (error) {
         console.error("Error fetching body compositions:", error);
-        throw error; // Propagate the error to the controller
+        throw error;
     }
-}
+};
 
 exports.deleteBodyComposition = async (userId, bodyCompositionId) => {
     try {
